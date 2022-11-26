@@ -1,0 +1,1 @@
+touist --sat --solve %1
