@@ -55,7 +55,7 @@ bigand $i in $ETATS: ;; for each state
     bigand $t in [1..3]: ;; for each tube
         bigand $e in [1..4]: ;; for each layer
             bigor $c in $C: ;; for each color
-                p($i, $t, $e, $c) ;; every state, every tube, every layer, have a color
+                p($i, $t, $e, $c) ;; every state, every tube, every layer, have minimum one color
             end
         end
     end
