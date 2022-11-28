@@ -44,15 +44,15 @@ while running:
     for x in data:
         pygame.draw.rect(screen, x[3], 
         (
-            x[1]*(square_size+space_between_squares), 
-            x[2]*square_size+x[0]*100, 
+            x[1]*(square_size+space_between_squares)+x[0]*100, 
+            x[2]*square_size, 
             square_size, 
             square_size
         ))
         pygame.draw.rect(screen, (255, 255, 255),
         (
-            x[1]*(square_size+space_between_squares),
-            x[2]*square_size+x[0]*100,
+            x[1]*(square_size+space_between_squares)+x[0]*100,
+            x[2]*square_size,
             square_size,
             square_size
         ), 1)
