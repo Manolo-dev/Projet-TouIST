@@ -5,14 +5,14 @@ $ETAPES=[0..$k]
 
 p(0, 1, 1, vert) ;; the first tube, first layer is green
 p(0, 1, 2, orange) ;; the first tube, second layer is orange
-p(0, 1, 3, vert) ;; the first tube, third layer is green
-p(0, 1, 4, orange) ;; the first tube, fourth layer is orange
+p(0, 1, 3, orange) ;; the first tube, third layer is green
+p(0, 1, 4, vert) ;; the first tube, fourth layer is orange
 
 ;; end init of the first tube
 ;; so it's look like this
 ;; tube 1
-;; | orange |
 ;; |  vert  |
+;; | orange |
 ;; | orange |
 ;; |  vert  |
 ;; \________/
@@ -21,14 +21,14 @@ p(0, 1, 4, orange) ;; the first tube, fourth layer is orange
 
 p(0, 2, 1, orange) ;; the second tube, first layer is orange
 p(0, 2, 2, vert) ;; the second tube, second layer is green
-p(0, 2, 3, orange) ;; the second tube, third layer is orange
-p(0, 2, 4, vert) ;; the second tube, fourth layer is green
+p(0, 2, 3, vert) ;; the second tube, third layer is orange
+p(0, 2, 4, orange) ;; the second tube, fourth layer is green
 
 ;; end init of the second tube
 ;; so it's look like this
 ;; tube 2
-;; |  vert  |
 ;; | orange |
+;; |  vert  |
 ;; |  vert  |
 ;; | orange |
 ;; \________/

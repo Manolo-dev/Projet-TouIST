@@ -10,7 +10,7 @@ print(data)
 
 pygame.init()
 
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
 pygame.display.set_caption("Display")
 
 clock = pygame.time.Clock()
@@ -45,14 +45,14 @@ while running:
         pygame.draw.rect(screen, x[3], 
         (
             x[1]*(square_size+space_between_squares), 
-            x[2]*square_size, 
+            x[2]*square_size+x[0]*100, 
             square_size, 
             square_size
         ))
         pygame.draw.rect(screen, (255, 255, 255),
         (
             x[1]*(square_size+space_between_squares),
-            x[2]*square_size,
+            x[2]*square_size+x[0]*100,
             square_size,
             square_size
         ), 1)
