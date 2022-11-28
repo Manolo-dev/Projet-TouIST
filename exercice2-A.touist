@@ -74,6 +74,15 @@ bigand $i in $ETAPES: ;; for each state
     end
 end
 
+;; third rule
+bigand $i in $ETAPES: ;; for each state
+    bigand $t in [1..3]: ;; for each tube
+        bigand $e in [1..3]: ;; for each layer
+            p($i, $t, $e, vide) => p($i, $t, $e+1, vide) ;; if a state, a tube, a layer is empty, then the layer above it is empty as well
+        end
+    end
+end
+
 ;; end result
 bigand $t in [1..3]: ;; for each tube
     bigor $c in $C: ;; at least one color
