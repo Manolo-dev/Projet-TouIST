@@ -154,11 +154,11 @@ bigand $e in $ETAPES when $e != 0: ;; for each step
                 bigor $t2 in [1..3]: ;; for at least one other  tube (target tube)
                     bigor $e2 in [1..4]: ;; for at least one layer
                         verser($e, $t, $e1, $t2, $e2, $c) => ;; only one verser by etape
-                            bigand $t3  in [1..3] when $t3 !=t : ;; for each different tube
-                                bigand $e3 in [1..4] when $e3 !=e1: ;; for each layer
-                                    bigand $t4 in [1..3] when $t4 != t2: ;; for each different target tube
+                            bigand $t3  in [1..3] when $t3 !=$t : ;; for each different tube
+                                bigand $e3 in [1..4] when $e3 !=$e1: ;; for each layer
+                                    bigand $t4 in [1..3] when $t4 != $t2: ;; for each different target tube
                                         bigand $e4 in [1..4] when $e4 !=$e2: ;; for each layer
-                                            bigand $c2 in $C when $c2 != c: ;; for each different color
+                                            bigand $c2 in $C when $c2 != $c: ;; for each different color
                                                 not verser($e, $t3, $e3, $t4, $e4, $c2) ;; no other verser
                                             end
                                         end
