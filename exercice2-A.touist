@@ -11,9 +11,9 @@ p(1, 1, 1, orange)
 
 ;; end result
 bigand $t in [1..3]: ;; for each tube
-    bigor $c in $C: ;; for each color
-        bigand $e in [1..4]: ;; for each step
-            p($k, $t, $e, $c) ;; the is full of a color
+    bigor $c in $C: ;; at least one color
+        bigand $e in [1..4]: ;; for each layer
+            p($k, $t, $e, $c) ;; the tube is full of a single color
         end
     end
 end
@@ -21,7 +21,7 @@ end
 bigand $t in [1..3]: ;; for each tube
     bigand $c in $C: ;; for each color
         bigand $c1 in $C when $c != $c1: ;; for each color
-            bigand $e in [1..4]: ;; for each step
+            bigand $e in [1..4]: ;; for each layer 
                 not p($k, $t, $e, $c) or not p($k, $t, $e, $c1) ;; the tube have only one color
             end
         end
@@ -33,11 +33,11 @@ end
 ;; verser(étape, tube, étage, tube2, étage2, couleur)
 bigand $e in $ETAPES: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [1..4]: ;; for each step
-            bigand $t2 in [1..3] when $t != $t2: ;; for each tube
-                bigand $e2 in [1..4]: ;; for each step
+        bigand $e1 in [1..4]: ;; for each layer
+            bigand $t2 in [1..3] when $t != $t2: ;; for each other tube
+                bigand $e2 in [1..4]: ;; for each layer
                     bigand $c in $C when $c != vide: ;; for each color
-                        verser($e, $t, $e1, $t2, $e2, $c) => p($e-1, $t, $e1, $c) ;; the tube have at this step have a color
+                        verser($e, $t, $e1, $t2, $e2, $c) => p($e-1, $t, $e1, $c) ;; the tube had a color in that layer before pouring
                     end
                 end
             end
@@ -47,11 +47,11 @@ end
 
 bigand $e in $ETAPES: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [1..4]: ;; for each step
-            bigand $t2 in [1..3] when $t != $t2: ;; for each tube
-                bigand $e2 in [1..4]: ;; for each step
+        bigand $e1 in [1..4]: ;; for each layer
+            bigand $t2 in [1..3] when $t != $t2: ;; for each other tube
+                bigand $e2 in [1..4]: ;; for each layer
                     bigand $c in $C when $c != vide: ;; for each color
-                        verser($e, $t, $e1, $t2, $e2, $c) => p($e-1, $t2, $e2, vide) ;; the tube dont have at this step have a color
+                        verser($e, $t, $e1, $t2, $e2, $c) => p($e-1, $t2, $e2, vide) ;; the target layer in the target tube is empty
                     end
                 end
             end
@@ -61,11 +61,11 @@ end
 
 bigand $e in $ETAPES: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [2..4]: ;; for each step
-            bigand $t2 in [1..3] when $t != $t2: ;; for each tube
-                bigand $e2 in [1..4]: ;; for each step
+        bigand $e1 in [2..4]: ;; for each layer
+            bigand $t2 in [1..3] when $t != $t2: ;; for each other tube
+                bigand $e2 in [1..4]: ;; for each layer
                     bigand $c in $C: ;; for each color
-                        verser($e, $t, $e1, $t2, $e2, $c) => (p($e, $t2, $e2-1, $c)) ;; the step after have the color
+                        verser($e, $t, $e1, $t2, $e2, $c) => (p($e, $t2, $e2-1, $c)) ;; the target layer is above a layer of similar color
                     end
                 end
             end
@@ -76,9 +76,9 @@ end
 ;; rules 3
 bigand $e in $ETAPES: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [1..4]: ;; for each step
-            bigand $t2 in [1..3] when $t != $t2: ;; for each tube
-                bigand $e2 in [1..4]: ;; for each step
+        bigand $e1 in [1..4]: ;; for each layer
+            bigand $t2 in [1..3] when $t != $t2: ;; for each other tube
+                bigand $e2 in [1..4]: ;; for each layer
                     bigand $c in $C: ;; for each color
                         verser($e, $t, $e1, $t2, $e2, $c) => p($e, $t, $e1, vide)
                     end
@@ -90,12 +90,12 @@ end
 
 bigand $e in $ETAPES: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [1..4]: ;; for each step
-            bigand $t2 in [1..3] when $t != $t2: ;; for each tube
-                bigand $e2 in [1..4]: ;; for each step
+        bigand $e1 in [1..4]: ;; for each layer
+            bigand $t2 in [1..3] when $t != $t2: ;; for each other tube
+                bigand $e2 in [1..4]: ;; for each layer
                     bigand $c in $C: ;; for each color
                         verser($e, $t, $e1, $t2, $e2, $c) => p($e, $t2, $e2, $c)
-                    end
+                    end 
                 end
             end
         end
@@ -105,11 +105,11 @@ end
 ;; rules 4
 bigand $e in $ETAPES when $e != 0: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [1..4]: ;; for each step
+        bigand $e1 in [1..4]: ;; for each layer
             bigand $c in $C when $c != vide: ;; for each color
                 (p($e-1, $t, $e1, vide) and p($e, $t, $e1, $c)) => ;; if the tube is empty and after the color is here
-                    bigor $t2 in [1..3] when $t != $t2: ;; for each tube
-                        bigor $e2 in [1..4]: ;; for each step
+                    bigor $t2 in [1..3] when $t != $t2: ;; for at least one other tube
+                        bigor $e2 in [1..4]: ;; for at least one layer
                             verser($e, $t2, $e2, $t, $e1, $c) ;; then we can move the color
                         end
                     end
@@ -121,11 +121,11 @@ end
 ;; rules 5
 bigand $e in $ETAPES when $e != 0: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [1..4]: ;; for each step
+        bigand $e1 in [1..4]: ;; for each layer
             bigand $c in $C when $c != vide: ;; for each color
                 (p($e-1, $t, $e1, $c) and p($e, $t, $e1, vide)) => ;; if the tube is empty and after the color is here
-                    bigor $t2 in [1..3] when $t != $t2: ;; for each tube
-                        bigor $e2 in [1..4]: ;; for each step
+                    bigor $t2 in [1..3] when $t != $t2: ;; for at least one other tube
+                        bigor $e2 in [1..4]: ;; for at least one layer
                             verser($e, $t, $e1, $t2, $e2, $c) ;; then we can move the color
                         end
                     end
@@ -137,10 +137,10 @@ end
 ;; rules 6
 bigand $e in $ETAPES when $e != 0: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [1..4]: ;; for each step
+        bigand $e1 in [1..4]: ;; for each layer
             bigand $c in $C when $c != vide: ;; for each color
                 p($e-1, $t, $e1, $c) => ;; if the tube have a color
-                    (p($e, $t, $e1, vide) or p($e, $t, $e1, $c)) ;; then the tube have the color or nothing
+                    (p($e, $t, $e1, vide) or p($e, $t, $e1, $c)) ;; after each step, any filled layer is either empty or has the same color as before
             end
         end
     end
@@ -149,16 +149,16 @@ end
 ;; rules 7
 bigand $e in $ETAPES when $e != 0: ;; for each step
     bigand $t in [1..3]: ;; for each tube
-        bigand $e1 in [1..4]: ;; for each step
+        bigand $e1 in [1..4]: ;; for each layer
             bigand $c in $C: ;; for each color
-                bigor $t2 in [1..3]: ;; for each tube
-                    bigor $e2 in [1..4]: ;; for each step
+                bigor $t2 in [1..3]: ;; for at least one other  tube (target tube)
+                    bigor $e2 in [1..4]: ;; for at least one layer
                         verser($e, $t, $e1, $t2, $e2, $c) => ;; only one verser by etape
-                            bigand $t3 in [1..3]: ;; for each tube
-                                bigand $e3 in [1..4]: ;; for each step
-                                    bigand $t4 in [1..3]: ;; for each tube
-                                        bigand $e4 in [1..4]: ;; for each step
-                                            bigand $c2 in $C: ;; for each color
+                            bigand $t3  in [1..3] when $t3 !=t : ;; for each different tube
+                                bigand $e3 in [1..4] when $e3 !=e1: ;; for each layer
+                                    bigand $t4 in [1..3] when $t4 != t2: ;; for each different target tube
+                                        bigand $e4 in [1..4] when $e4 !=$e2: ;; for each layer
+                                            bigand $c2 in $C when $c2 != c: ;; for each different color
                                                 not verser($e, $t3, $e3, $t4, $e4, $c2) ;; no other verser
                                             end
                                         end
