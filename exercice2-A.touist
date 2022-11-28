@@ -1,6 +1,6 @@
 $C=[vert, orange, bleu, rouge, rose, vide]
 
-$k=7
+$k=0
 $ETAPES=[0..$k]
 
 p(0, 1, 1, vert) ;; the first tube, first layer is green
@@ -83,7 +83,29 @@ bigand $i in $ETAPES: ;; for each state
     end
 end
 
-;; end result
+bigand $i in $ETAPES:
+    not  (
+
+    bigand $t in [1..3]: ;; for each tube
+        bigor $c in $C: ;; at least one color
+            bigand $e in [1..4]: ;; for each layer
+                p($k, $t, $e, $c) ;; the tube is full of a single color
+            end
+        end
+    end
+    and
+    bigand $t in [1..3]: ;; for each tube
+        bigand $c in $C: ;; for each color
+            bigand $c1 in $C when $c != $c1: ;; for each color
+                bigand $e in [1..4]: ;; for each layer 
+                    not p($k, $t, $e, $c) or not p($k, $t, $e, $c1) ;; the tube have only one color
+                end
+            end
+        end
+    end
+    ) => $k = $k+1
+end
+
 bigand $t in [1..3]: ;; for each tube
     bigor $c in $C: ;; at least one color
         bigand $e in [1..4]: ;; for each layer
@@ -101,7 +123,6 @@ bigand $t in [1..3]: ;; for each tube
         end
     end
 end
-
 ;; rules 2
 ;; 
 ;; verser(étape, tube, étage, tube2, étage2, couleur)
