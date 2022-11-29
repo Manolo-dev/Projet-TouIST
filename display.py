@@ -1,60 +1,41 @@
-import pygame
 import re
 
 with open('output.txt') as f:
     data = f.read()
 
 data = re.findall(r"1 p\((\d),(\d),(\d),(\w+)\)", data)
-print(data)
-# data format is [(state, x, y, color), ...]
-
-pygame.init()
-
-screen = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
-pygame.display.set_caption("Display")
-
-clock = pygame.time.Clock()
+colors = {
+    'vert': '\033[48;5;41m',
+    'orange': '\033[48;5;214m',
+    'bleu': '\033[48;5;75m',
+    'rouge': '\033[48;5;197m',
+    'rose': '\033[48;5;201m',
+    'vide': '\033[48;5;234m',
+}
 
 for i in range(len(data)):
-    if data[i][3] == "bleu":
-        data[i] = (int(data[i][0]), int(data[i][1]), int(data[i][2]), (0, 0, 255))
-    elif data[i][3] == "rouge":
-        data[i] = (int(data[i][0]), int(data[i][1]), int(data[i][2]), (255, 0, 0))
-    elif data[i][3] == "vert":
-        data[i] = (int(data[i][0]), int(data[i][1]), int(data[i][2]), (0, 255, 0))
-    elif data[i][3] == "orange":
-        data[i] = (int(data[i][0]), int(data[i][1]), int(data[i][2]), (255, 165, 0))
-    elif data[i][3] == "rose":
-        data[i] = (int(data[i][0]), int(data[i][1]), int(data[i][2]), (255, 192, 203))
-    elif data[i][3] == "vide":
-        data[i] = (int(data[i][0]), int(data[i][1]), int(data[i][2]), (0, 0, 0))
+    data[i] = (int(data[i][0]), int(data[i][1]), int(data[i][2]), data[i][3])
 
-square_size = 20
-space_between_squares = 10
+size = [0, 0, 0]
+for i in range(len(data)):
+    if data[i][0] > size[0]:
+        size[0] = data[i][0]
+    if data[i][1] > size[1]:
+        size[1] = data[i][1]
+    if data[i][2] > size[2]:
+        size[2] = data[i][2]
+size = [size[0]+1, size[1], size[2]]
+result = [[['vide']*size[2] for i in range(size[1])] for k in range(size[0])]
 
-running = True
-while running:
-    clock.tick(60)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+for e in data:
+    result[e[0]][e[1]-1][e[2]-1] = e[3]
 
-    screen.fill((0, 0, 0))
-
-    for x in data:
-        pygame.draw.rect(screen, x[3], 
-        (
-            x[1]*(square_size+space_between_squares)+x[0]*100, 
-            (4-x[2])*square_size, 
-            square_size, 
-            square_size
-        ))
-        pygame.draw.rect(screen, (255, 255, 255),
-        (
-            x[1]*(square_size+space_between_squares)+x[0]*100,
-            (4-x[2])*square_size,
-            square_size,
-            square_size
-        ), 1)
-
-    pygame.display.flip()
+for i in range(size[0]):
+    s = result[i]
+    print("\n=== ÉTAPE", i, "===\n")
+    for k in range(size[2]-1, -1, -1):
+        for j in range(size[1]):
+            t = s[j]
+            e = t[k]
+            print(colors[e] + "  " + '\033[0m', '', end="")
+        print()
