@@ -16,24 +16,26 @@ colors = {
 for i in range(len(data)):
     data[i] = (int(data[i][0]), int(data[i][1]), int(data[i][2]), data[i][3])
 
-j = [0, 0, 0]
+size = [0, 0, 0]
 for i in range(len(data)):
-    if data[i][0] > j[0]:
-        j[0] = data[i][0]
-    if data[i][1] > j[1]:
-        j[1] = data[i][1]
-    if data[i][2] > j[2]:
-        j[2] = data[i][2]
-j = [j[0]+1, j[1], j[2]]
-result = [[['vide']*j[1] for i in range(j[2])] for k in range(j[0])]
+    if data[i][0] > size[0]:
+        size[0] = data[i][0]
+    if data[i][1] > size[1]:
+        size[1] = data[i][1]
+    if data[i][2] > size[2]:
+        size[2] = data[i][2]
+size = [size[0]+1, size[1], size[2]]
+result = [[['vide']*size[2] for i in range(size[1])] for k in range(size[0])]
 
 for e in data:
-    result[e[0]][e[2]-1][e[1]-1] = e[3]
+    result[e[0]][e[1]-1][e[2]-1] = e[3]
 
-for i in range(len(result)):
+for i in range(size[0]):
     s = result[i]
     print("\n=== ÉTAPE", i, "===\n")
-    for t in s:
-        for e in t:
-            print(colors[e] + "  " + '\033[0m', '', end="")
+    for k in range(size[2]-1, -1, -1):
+        for j in range(size[1]):
+            t = s[j]
+            e = t[k]
+            print(colors[e] + "  " + '\033[0m', end="")
         print()
