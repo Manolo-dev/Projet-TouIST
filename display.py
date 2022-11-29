@@ -37,5 +37,5 @@ for i in range(size[0]):
         for j in range(size[1]):
             t = s[j]
             e = t[k]
-            print(colors[e] + "  " + '\033[0m', end="")
+            print(colors[e] + "  " + '\033[0m', '', end="")
         print()
