@@ -36,25 +36,4 @@ for i in range(len(result)):
     for t in s:
         for e in t:
             print(colors[e] + "  " + '\033[0m', '', end="")
-        print()t.type == pygame.QUIT:
-            running = False
-
-    screen.fill((0, 0, 0))
-
-    for x in data:
-        pygame.draw.rect(screen, x[3], 
-        (
-            x[1]*(square_size+space_between_squares)+x[0]*100, 
-            (4-x[2])*square_size, 
-            square_size, 
-            square_size
-        ))
-        pygame.draw.rect(screen, (255, 255, 255),
-        (
-            x[1]*(square_size+space_between_squares)+x[0]*100,
-            (4-x[2])*square_size,
-            square_size,
-            square_size
-        ), 1)
-
-    pygame.display.flip()
+        print()
