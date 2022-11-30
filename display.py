@@ -63,14 +63,22 @@ for i in range(len(actions)):
     actions_temp[int(actions[i][0])] = (int(actions[i][0]), int(actions[i][1])-1, int(actions[i][2])-1, int(actions[i][3])-1, int(actions[i][4])-1, actions[i][5])
 actions = actions_temp
 
-print(actions)
 #==============#
 #===| SHOW |===#
 #==============#
 
+print(len(size_tubes))
+
 for i in range(size_tubes[0]):
     s = tubes[i]
-    print("\n=== ÉTAPE", i, "===\n")
+    print()
+    print("\033[1;31m", end="")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "╔"  + ""           +  "═"*(10  + len(str(i))) + ""           +  "╗")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "║┏" + ""           +  "━"*(8   + len(str(i))) + ""           + "┓║")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "║┃" + "\033[1;34m" + " ÉTAPE " + str(i) + " " + "\033[1;31m" + "┃║")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "║┗" + ""           +  "━"*(8   + len(str(i))) + ""           + "┛║")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "╚"  + ""           +  "═"*(10  + len(str(i))) + ""           +  "╝")
+    print("\033[0m")
     for j in range(size_tubes[1]):
         print("\033[1;31m🭾"+colors_b['vide']+"   "+"\033[0m\033[1;31m🭽\033[0m ", end="")
     print()
