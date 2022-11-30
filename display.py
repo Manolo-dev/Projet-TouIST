@@ -6,22 +6,22 @@ with open('output.txt') as f:
 tubes = re.findall(r"1 p\((\d+),(\d+),(\d+),(\w+)\)", datas)
 actions = re.findall(r"1 verser\((\d+),(\d+),(\d+),(\d+),(\d+),(\w+)\)", datas)
 
-colors = {
-    'vert': '\033[48;5;41m',
-    'orange': '\033[48;5;214m',
-    'bleu': '\033[48;5;75m',
-    'rouge': '\033[48;5;197m',
-    'rose': '\033[48;5;201m',
-    'vide': '\033[48;5;234m',
+colors_b = {
+    'vert':   '\033[48;2;087;255;087m',
+    'orange': '\033[48;2;255;171;087m',
+    'bleu':   '\033[48;2;087;087;255m',
+    'rouge':  '\033[48;2;255;087;087m',
+    'rose':   '\033[48;2;255;087;255m',
+    'vide':   '\033[48;2;026;026;026m',
 }
 
 colors_f = {
-    'vert': '\033[38;5;41m',
-    'orange': '\033[38;5;214m',
-    'bleu': '\033[38;5;75m',
-    'rouge': '\033[38;5;197m',
-    'rose': '\033[38;5;201m',
-    'vide': '\033[38;5;234m',
+    'vert':   '\033[38;2;087;255;087m',
+    'orange': '\033[38;2;255;171;087m',
+    'bleu':   '\033[38;2;087;087;255m',
+    'rouge':  '\033[38;2;255;087;087m',
+    'rose':   '\033[38;2;255;087;255m',
+    'vide':   '\033[38;2;026;026;026m',
 }
 
 #===============#
@@ -71,39 +71,28 @@ print(actions)
 for i in range(size_tubes[0]):
     s = tubes[i]
     print("\n=== ÉTAPE", i, "===\n")
-    print(" ", end="")
     for j in range(size_tubes[1]):
-        print("\033[1;31m▁▁▁\033[1;0m  ", end="")
+        print("\033[1;31m🭾"+colors_b['vide']+"   "+"\033[0m\033[1;31m🭽\033[0m ", end="")
     print()
     for k in range(size_tubes[2]-1, -1, -1):
-        print("\033[1;31m▕\033[1;0m", end="")
-        for j in range(size_tubes[1]):
-            char = "   "
-            if k == actions[i][2] and j == actions[i][1]:
-                x1 = actions[i][1]
-                y1 = actions[i][2]
-                x2 = actions[i][3]
-                y2 = actions[i][4]
-                if x1 > x2 and y1 < y2:
-                    char = "⇖⇖⇖"
-                if x1 < x2 and y1 < y2:
-                    char = "⇗⇗⇗"
-                if x1 < x2 and y1 > y2:
-                    char = "⇘⇘⇘"
-                if x1 > x2 and y1 > y2:
-                    char = "⇙⇙⇙"
-                if x1 < x2 and y1 == y2:
-                    char = "⇒⇒⇒"
-                if x1 > x2 and y1 == y2:
-                    char = "⇐⇐⇐"
-                char = colors_f[actions[i][5]]+char
-            if k == actions[i][4] and j == actions[i][3]:
-                char = colors_f['vide']+" ■ "
-            t = s[j]
-            e = t[k]
-            print(colors[e] + char + '\033[0m' + ('\033[1;31m▏\033[1;0m' if j < size_tubes[1] else '') + ('\033[1;31m▕\033[1;0m' if j < size_tubes[1]-1 else ''), end="")
-        print()
+        for _ in range(3):
+            print("\033[1;31m▕\033[1;0m", end="")
+            for j in range(size_tubes[1]):
+                t = s[j]
+                e = t[k]
+                char = "   "
+                if _ == 0 and ((k+1 < size_tubes[2] and t[k+1] == 'vide') or (k+1 == size_tubes[2])) and e != 'vide':
+                    char = colors_f['vide']+"▝▀▘" # ▜█▛    ▛ ▜    ▛▜▛    ▓▓▓
+                if _ == 1 and k == actions[i][2] and j == actions[i][1]:
+                    char = "╺━╸"
+                    char = colors_f[actions[i][5]]+char
+                if _ == 1 and k == actions[i][4] and j == actions[i][3]:
+                    char = colors_f['vide']+"╺╋╸"
+                if _ == 2 and k != 0 and e != "vide":
+                    char = "▁▁▁"
+                print(colors_b[e] + char + '\033[0m' + ('\033[1;31m▏\033[1;0m ' if j < size_tubes[1] else '') + ('\033[1;31m▕\033[1;0m' if j < size_tubes[1]-1 else ''), end="")
+            print()
     print(" ", end="")
     for j in range(size_tubes[1]):
-        print("\033[1;31m▔▔▔\033[1;0m  ", end="")
+        print("\033[1;31m▔▔▔\033[1;0m   ", end="")
 print()
