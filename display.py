@@ -1,4 +1,5 @@
 import re
+from getch import getch
 
 with open('output.txt') as f:
     datas = f.read()
@@ -104,3 +105,5 @@ for i in range(size_tubes[0]):
     for j in range(size_tubes[1]):
         print("\033[1;31m▔▔▔\033[1;0m   ", end="")
 print()
+
+getch()
