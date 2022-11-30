@@ -67,17 +67,17 @@ actions = actions_temp
 #===| SHOW |===#
 #==============#
 
-print(len(size_tubes))
-
 for i in range(size_tubes[0]):
     s = tubes[i]
+    space = ' ' if len(str(i)) % 2 == 0 else ''
+    sl    = 1 if len(str(i)) % 2 == 0 else 0
     print()
     print("\033[1;31m", end="")
-    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "╔"  + ""           +  "═"*(10  + len(str(i))) + ""           +  "╗")
-    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "║┏" + ""           +  "━"*(8   + len(str(i))) + ""           + "┓║")
-    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "║┃" + "\033[1;34m" + " ÉTAPE " + str(i) + " " + "\033[1;31m" + "┃║")
-    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "║┗" + ""           +  "━"*(8   + len(str(i))) + ""           + "┛║")
-    print(" " * ((6*size_tubes[1] - len(str(i)) - 13)//2) + "╚"  + ""           +  "═"*(10  + len(str(i))) + ""           +  "╝")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13 - sl)//2) + "╔"  + ""           +  "═"*(10  + sl    + len(str(i))) + ""           +  "╗")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13 - sl)//2) + "║┏" + ""           +  "━"*(8   + sl    + len(str(i))) + ""           + "┓║")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13 - sl)//2) + "║┃" + "\033[1;34m" + " ÉTAPE " + space + str(i) + " " + "\033[1;31m" + "┃║")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13 - sl)//2) + "║┗" + ""           +  "━"*(8   + sl    + len(str(i))) + ""           + "┛║")
+    print(" " * ((6*size_tubes[1] - len(str(i)) - 13 - sl)//2) + "╚"  + ""           +  "═"*(10  + sl    + len(str(i))) + ""           +  "╝")
     print("\033[0m")
     for j in range(size_tubes[1]):
         print("\033[1;31m🭾"+colors_b['vide']+"   "+"\033[0m\033[1;31m🭽\033[0m ", end="")
