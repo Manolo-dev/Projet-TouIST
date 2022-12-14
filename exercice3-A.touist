@@ -1,5 +1,6 @@
 $C=[vert, orange, bleu, rouge, rose, vide]
 
+$t=3
 
 $k=10 ;; idk
 $ETAPES=[0..$k]
