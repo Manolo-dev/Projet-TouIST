@@ -192,6 +192,19 @@ bigand $i in $ETAPES when $i != 0:
 end
 
 
+;;rule 5
+bigand $i in $ETAPES when $i != 0:
+    bigand $t in [1..$T] :
+        bigor $e in [1..4] :
+            bigand $c in $C when $c != vide :
+                tube_destination($i, $t) and ((p($i-1, $t, 1, vide) xor p($i-1, $t, e-1, $c)) ) => couleur_deplacee($i, $c) => p($i,$t,$e,$c) ;;not sure yet
+
+            end
+        end
+    end
+end
+
+
 ;; rule 8
 bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T] :
