@@ -100,6 +100,25 @@ bigand $i in $ETAPES: ;; for each state
     end
 end
 
+;; end result
+bigand $t in [1..$T]: ;; for each tube
+    bigor $c in $C: ;; at least one color
+        bigand $e in [1..4]: ;; for each layer
+            p($k, $t, $e, $c) ;; the tube is full of a single color
+        end
+    end
+end
+
+bigand $t in [1..$T]: ;; for each tube
+    bigand $c in $C: ;; for each color
+        bigand $c1 in $C when $c != $c1: ;; for each color
+            bigand $e in [1..4]: ;; for each layer 
+                not p($k, $t, $e, $c) or not p($k, $t, $e, $c1) ;; the tube have only one color
+            end
+        end
+    end
+end
+
 ;;ex3 rules
 
 
@@ -197,7 +216,7 @@ bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T] :
         bigor $e in [1..4] :
             bigand $c in $C when $c != vide :
-                tube_destination($i, $t) and ((p($i-1, $t, 1, vide) xor p($i-1, $t, e-1, $c)) ) =>  p($i,$t,$e,$c) and couleur_deplacee($i, $c) ;;not sure yet
+                tube_destination($i, $t) and ((p($i-1, $t, 1, vide) xor p($i-1, $t, $e-1, $c)) ) =>  p($i,$t,$e,$c) and couleur_deplacee($i, $c) ;;not sure yet
             end
         end
     end
