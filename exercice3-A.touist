@@ -80,12 +80,12 @@ bigand $i in $ETAPES :
     end
 end
 
-rule 2
-bigand $i in $ETAPES when $i != 0 :
-    bigand $t in [1..$T] :
-         p($i-1, $t, 1, vide) => not tube_source($i, $t) ;; if first layer is empty, it means the whole tube is empty
-    end
-end
+;; rule 2
+;; bigand $i in $ETAPES when $i != 0 :
+;;     bigand $t in [1..$T] :
+;;          p($i-1, $t, 1, vide) => not tube_source($i, $t) ;; if first layer is empty, it means the whole tube is empty
+;;     end
+;; end
 
 ;; rule 2
 bigand $i in $ETAPES when $i != 0 :
