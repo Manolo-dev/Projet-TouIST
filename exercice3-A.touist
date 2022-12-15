@@ -1,4 +1,4 @@
-$C=[vert, orange, bleu, rouge, rose, vide]
+$C=[vert, orange, vide]
 
 $T=3
 
@@ -260,4 +260,11 @@ bigand $i in $ETAPES when $i != 0:
     end
 end
 
-
+;; max layer
+bigand $e in $ETAPES: ;; for each step
+    bigand $t in [1..$T]: ;; for each tube
+            bigand $c in $C: ;; for each color
+                not p($e, $t, 0, $c) ;; no color can be in the 0th layer
+            end
+    end
+end
