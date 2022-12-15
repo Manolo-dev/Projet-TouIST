@@ -2,7 +2,7 @@ $C=[vert, orange, vide]
 
 $T=3
 
-$k=15 ;; idk
+$k=4 ;; idk
 $ETAPES=[0..$k]
 
 ;; p(0,1,1,vide)
@@ -122,16 +122,44 @@ end
 ;;ex3 rules
 
 
-;; rule 1
+;; rule 1 ( at least 1 of each)
 bigand $i in $ETAPES :
     bigor $t in [1..$T] :
-        bigor $t2 in [1..$T] :
-            bigor $c in $C when $c != vide or $t != $t2 :
+        bigor $t2 in [1..$T] when $t2 !=$t:
+            bigor $c in $C when $c != vide :
                 tube_source($i, $t) and tube_destination($i, $t2) and couleur_deplacee($i,$c) 
             end
         end
     end
 end
+
+;; rule 1(1 source max)
+bigand $i in $ETAPES :
+    bigor $t in [1..$T] :
+        bigor $t2 in [1..$T] when $t2 !=$t:
+                tube_source($i, $t) => not tube_source($i,$t2)
+        end
+    end
+end
+
+;; rule 1 (1 destination max)
+bigand $i in $ETAPES :
+    bigor $t in [1..$T] :
+        bigor $t2 in [1..$T] when $t2 !=$t:
+            tube_destination($i, $t) => not tube_destination($i,$t2)
+        end
+    end
+end
+
+;; rule 1 (1 couleur déplacée max)
+bigand $i in $ETAPES :
+    bigor $c in $C when $c != vide :
+        bigor $c2 in $C when $c2 != vide and $c2 !=$c:
+            couleur_deplacee($i,$c) => not couleur_deplacee($i,$c2)
+        end
+    end
+end
+
 
 ;;rule 2
 bigand $i in $ETAPES when $i != 0 :
@@ -261,10 +289,10 @@ bigand $i in $ETAPES when $i != 0:
 end
 
 ;; max layer
-bigand $e in $ETAPES: ;; for each step
-    bigand $t in [1..$T]: ;; for each tube
-            bigand $c in $C: ;; for each color
-                not p($e, $t, 0, $c) and not p($e, $t, 5 , $c) ;; no color can be in the 0th and 5th layer
-            end
-    end
-end
+;; bigand $e in $ETAPES: ;; for each step
+;;     bigand $t in [1..$T]: ;; for each tube
+;;             bigand $c in $C: ;; for each color
+;;                 not p($e, $t, 0, $c) and not p($e, $t, 5 , $c) ;; no color can be in the 0th and 5th layer
+;;             end
+;;     end
+;; end
