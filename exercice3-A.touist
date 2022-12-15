@@ -214,6 +214,20 @@ bigand $i in $ETAPES when $i != 0:
     end
 end
 
+;; rule 7
+
+bigand $i in $ETAPES when $i != 0:
+    bigand $t in [1..$T] :
+        bigand $e in [1..4] :
+            bigor $c in $C when $c != vide :
+                bigor $c2 in $C when $c2 != vide:
+                p($i-1, $t, $e, $c) and p($i, $t, $e, vide) =>
+                p($i, $t, $e+1, vide) or p($i, $t, $e-1,c2)
+            end
+        end
+    end
+end
+
 ;; rule 8
 bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T] :
