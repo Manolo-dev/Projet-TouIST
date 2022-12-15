@@ -197,8 +197,7 @@ bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T] :
         bigor $e in [1..4] :
             bigand $c in $C when $c != vide :
-                tube_destination($i, $t) and p($i,$t,$e,$c) and couleur_deplacee($i, $c) => ((p($i-1, $t, 1, vide) xor p($i-1, $t, e-1, $c)) ) ;;not sure yet
-
+                tube_destination($i, $t) and ((p($i-1, $t, 1, vide) xor p($i-1, $t, e-1, $c)) ) =>  p($i,$t,$e,$c) and couleur_deplacee($i, $c) ;;not sure yet
             end
         end
     end
@@ -209,7 +208,7 @@ bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T] :
         bigand $e in [1..4] :
             bigand $c in $C when $c != vide :
-                tube_destination($i, $t) and p($i-1, $t, $e, vide) and p($i, $t, $e, $c) and couleur_deplacee($i, $c) =>   (p($i-1,$t,$e+1, vide) or p($i-1, $t, $e-1, $c))
+                p($i-1, $t, $e, vide) and p($i, $t, $e, $c) and couleur_deplacee($i, $c) =>   (p($i-1,$t,$e+1, vide) or p($i-1, $t, $e-1, $c)) and tube_destination($i, $t) 
             end
         end
     end
