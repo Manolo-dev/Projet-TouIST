@@ -1,5 +1,5 @@
 $C=[vert, orange, bleu, rouge, rose, vide]
-
+$T=3
 $k=0
 $ETATS=[0..$k]
 
@@ -52,7 +52,7 @@ p(0, 3, 4, vide) ;; the third tube, fourth layer is empty
 
 ;; first rule
 bigand $i in $ETATS: ;; for each state
-    bigand $t in [1..3]: ;; for each tube
+    bigand $t in [1..$T]: ;; for each tube
         bigand $e in [1..4]: ;; for each layer
             bigor $c in $C: ;; at least one color
                 p($i, $t, $e, $c) ;; every state, every tube, every layer, have one color at minimum
@@ -63,7 +63,7 @@ end
 
 ;; second rule
 bigand $i in $ETATS: ;; for each state
-    bigand $t in [1..3]: ;; for each tube
+    bigand $t in [1..$T]: ;; for each tube
         bigand $e in [1..4]: ;; for each layer
             bigand $c in $C: ;; for each color
                 bigand $c2 in $C when $c2 != $c: ;; for each color different from the previous one
@@ -76,7 +76,7 @@ end
 
 ;; third rule
 bigand $i in $ETATS: ;; for each state
-    bigand $t in [1..3]: ;; for each tube
+    bigand $t in [1..$T]: ;; for each tube
         bigand $e in [1..3]: ;; for each layer
             p($i, $t, $e, vide) => p($i, $t, $e+1, vide) ;; if a state, a tube, a layer is empty, then the layer above it is empty as well
         end

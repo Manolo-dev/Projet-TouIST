@@ -1,6 +1,6 @@
 $C=[vert, orange, bleu, rouge, rose, vide]
 $T=3
-$k=10 ;; because trust me
+$k=8 ;; because trust me
 $ETAPES=[0..$k]
 
 ;; 1 is for the first tube
