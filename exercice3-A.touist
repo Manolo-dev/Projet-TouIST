@@ -264,7 +264,7 @@ end
 bigand $e in $ETAPES: ;; for each step
     bigand $t in [1..$T]: ;; for each tube
             bigand $c in $C: ;; for each color
-                not p($e, $t, 0, $c) ;; no color can be in the 0th layer
+                not p($e, $t, 0, $c) and not p($e, $t, 5 , $c) ;; no color can be in the 0th and 5th layer
             end
     end
 end
