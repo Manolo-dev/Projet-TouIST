@@ -2,7 +2,7 @@ $C=[vert, orange, vide]
 
 $T=3
 
-$k=10 ;; idk
+$k=15 ;; idk
 $ETAPES=[0..$k]
 
 ;; p(0,1,1,vide)
