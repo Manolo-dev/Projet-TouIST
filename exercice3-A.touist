@@ -1,8 +1,8 @@
-$C=[vert, orange, vide]
+$C=[vert, orange,violet,rose,bleu, vide]
 
 $T=3
 
-$k=5 ;; idk
+$k=10 ;; idk
 $ETAPES=[0..$k]
 
 ;; p(0,1,1,vide)
@@ -71,6 +71,7 @@ p(0, 3, 4, vide) ;; the third tube, fourth layer is empty
 ;;tube_destination(1, 1)
 ;;couleur_deplacee(1, vert)
 
+
 ;;exercice 1 rules:
 ;; first rule
 bigand $i in $ETAPES: ;; for each state
@@ -124,74 +125,74 @@ bigand $t in [1..$T]: ;; for each tube
     end
 end
 
-;;ex3 rules
+;; ex3 rules
 
 
-;; rule 1 ( at least 1 of each)
-bigand $i in $ETAPES when $i != $k:
-    bigand $t in [1..$T] :
-        bigand $t2 in [1..$T] when $t2 !=$t:
-            bigand $t3 in [1..$T] when $t3 !=$t:
-                bigand $c in $C when $c != vide :
-                    tube_source($i, $t) => tube_destination($i, $t2) and couleur_deplacee($i,$c) and not tube_source($i,$t3)
-                end
-            end
-        end
-    end
-end
+;; ;; rule 1 ( at least 1 of each)
+;; bigand $i in $ETAPES when $i != $k:
+;;     bigand $t in [1..$T] :
+;;         bigand $t2 in [1..$T] when $t2 !=$t:
+;;             bigand $t3 in [1..$T] when $t3 !=$t:
+;;                 bigand $c in $C when $c != vide :
+;;                     tube_source($i, $t) => (tube_destination($i, $t2) and couleur_deplacee($i,$c) and not tube_source($i,$t3))
+;;                 end
+;;             end
+;;         end
+;;     end
+;; end
+ 
+;; ;; rule 1 ( at least 1 of each)
+;; bigand $i in $ETAPES when $i != $k:
+;;     bigand $t in [1..$T] :
+;;         bigand $t2 in [1..$T] when $t2 !=$t:
+;;             bigand $t3 in [1..$T] when $t3 !=$t2:
+;;                 bigand $c in $C when $c != vide :
+;;                     tube_destination($i, $t2)=> (tube_source($i, $t) and couleur_deplacee($i,$c) and not tube_destination($i,$t3))
+;;                 end
+;;             end
+;;         end
+;;     end
+;; end
 
-;; rule 1 ( at least 1 of each)
-bigand $i in $ETAPES when $i != $k:
-    bigand $t in [1..$T] :
-        bigand $t2 in [1..$T] when $t2 !=$t:
-            bigand $t3 in [1..$T] when $t3 !=$t2:
-                bigand $c in $C when $c != vide :
-                    tube_destination($i, $t2)=> tube_source($i, $t) and couleur_deplacee($i,$c) and not tube_destination($i,$t3)
-                end
-            end
-        end
-    end
-end
+;; ;; rule 1 ( at least 1 of each)
+;; bigand $i in $ETAPES when $i != $k:
+;;     bigand $t in [1..$T] :
+;;         bigand $t2 in [1..$T] when $t2 !=$t:
+;;             bigand $c in $C when $c != vide :
+;;                 bigand $c2 in $C when $c2!= vide and $c2!=$c :
+;;                     couleur_deplacee($i,$c) => (tube_source($i, $t) and tube_destination($i, $t2) and not couleur_deplacee($i,$c2))
+;;                 end
+;;             end
+;;         end
+;;     end
+;; end
 
-;; rule 1 ( at least 1 of each)
-bigand $i in $ETAPES when $i != $k:
-    bigand $t in [1..$T] :
-        bigand $t2 in [1..$T] when $t2 !=$t:
-            bigand $c in $C when $c != vide :
-                bigand $c2 in $C when $c2!= vide and $c2!=$c :
-                    couleur_deplacee($i,$c) => tube_source($i, $t) and tube_destination($i, $t2) and not couleur_deplacee($i,$c2)
-                end
-            end
-        end
-    end
-end
+;; ;; rule 1(1 source max)
+;; bigand $i in $ETAPES when $i != $k:
+;;     bigand $t in [1..$T] :
+;;         bigand $t2 in [1..$T] when $t2 !=$t:
+;;                 tube_source($i, $t) => not tube_source($i,$t2)
+;;         end
+;;     end
+;; end
 
-;; rule 1(1 source max)
-bigand $i in $ETAPES when $i != $k:
-    bigand $t in [1..$T] :
-        bigand $t2 in [1..$T] when $t2 !=$t:
-                tube_source($i, $t) => not tube_source($i,$t2)
-        end
-    end
-end
+;; ;; rule 1 (1 destination max)
+;; bigand $i in $ETAPES when $i != $k:
+;;     bigand $t in [1..$T] :
+;;         bigand $t2 in [1..$T] when $t2 !=$t:
+;;             tube_destination($i, $t) => not tube_destination($i,$t2)
+;;         end
+;;     end
+;; end
 
-;; rule 1 (1 destination max)
-bigand $i in $ETAPES when $i != $k:
-    bigand $t in [1..$T] :
-        bigand $t2 in [1..$T] when $t2 !=$t:
-            tube_destination($i, $t) => not tube_destination($i,$t2)
-        end
-    end
-end
-
-;; rule 1 (1 couleur déplacée max)
-bigand $i in $ETAPES when $i != $k:
-    bigand $c in $C when $c != vide :
-        bigand $c2 in $C when $c2 != vide and $c2 !=$c:
-            couleur_deplacee($i,$c) => not couleur_deplacee($i,$c2)
-        end
-    end
-end
+;; ;; rule 1 (1 couleur déplacée max)
+;; bigand $i in $ETAPES when $i != $k:
+;;     bigand $c in $C when $c != vide :
+;;         bigand $c2 in $C when $c2 != vide and $c2 !=$c:
+;;             couleur_deplacee($i,$c) => not couleur_deplacee($i,$c2)
+;;         end
+;;     end
+;; end
 
 
 ;;rule 2
@@ -238,7 +239,7 @@ bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T] :
         bigor $e in [1..3] :
             bigand $c in $C when $c != vide :
-                tube_source($i, $t) => p($i-1, $t, $e, $c) => p($i-1, $t, $e+1, vide) => couleur_deplacee($i, $c)
+                tube_source($i, $t) => p($i-1, $t, $e, $c) and p($i-1, $t, $e+1, vide) => couleur_deplacee($i, $c)
                 ;; if the layer above ($e+1) is empty, it means e is the highest layer
                 ;; idk why do i need the p($i-1, $t, 4, $c)
             end
@@ -252,7 +253,7 @@ bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T] :
         bigand $c in $C:
             bigor $e in [2..4] :
-                (tube_destination($i, $t) and couleur_deplacee($i, $c)) => (p($i-1, $t, $e-1, $c) and p($i-1, $t, $e, vide) and p($i, $t, $e, $c))
+                (tube_destination($i, $t) and couleur_deplacee($i, $c)) <=> (p($i-1, $t, $e-1, $c) and p($i-1, $t, $e, vide) and p($i, $t, $e, $c))
             end
         end
     end
@@ -263,7 +264,7 @@ bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T] :
         bigor $e in [1..3] :
             bigand $c in $C when $c != vide :
-                (couleur_deplacee($i, $c) and tube_destination($i, $t)) => (p($i-1, $t, $e, $c) and p($i-1, $t, $e+1, vide) and p($i, $t, $e+1, $c))
+                (couleur_deplacee($i, $c) and tube_destination($i, $t)) => (p($i-1, $t, $e, vide) and p($i-1, $t, $e+1, vide) and p($i, $t, $e, $c))
             end
         end
     end
@@ -293,14 +294,15 @@ bigand $i in $ETAPES when $i!=$k: ;; for each step
     end
 end
 
+
 ;; regle test
 bigand $i in $ETAPES when $i!=$k: ;; for each step
     bigand $t in [1..$T]: ;; for each tube
-        bigand $e1 in [1..3]: ;; for each layer
+        bigand $e1 in [1..4]: ;; for each layer
             bigand $c in $C when $c != vide: ;; for each color
                 p($i, $t, $e1, vide )   => ;; if the layer is empty
-                    (p($i+1, $t, $e1, vide)and (p($i+1, $t, $e1+1, vide))=> not tube_destination($i+1,$t) ) xor
-                    (p($i+1, $t, $e1, $c)and (p($i+1, $t, $e1+1, vide)) => tube_destination($i+1,$t) ) ;; after each step, if an empty layer stays empty, then it can't be the destination, but if it is filled then it is the destination
+                    (p($i+1, $t, $e1, vide)and (p($i+1, $t, $e1+1, vide)or est_haut($i+1, $t, $e1) )=> not tube_destination($i+1,$t) ) xor
+                    (p($i+1, $t, $e1, $c)and (p($i+1, $t, $e1+1, vide) or est_haut($i+1, $t, $e1)) => tube_destination($i+1,$t) ) ;; after each step, if an empty layer stays empty, then it can't be the destination, but if it is filled then it is the destination
             end
         end
     end
@@ -312,12 +314,20 @@ bigand $i in $ETAPES when $i!=$k: ;; for each step
         bigand $e1 in [1..3]: ;; for each layer
             bigand $c in $C when $c != vide: ;; for each color
                 p($i, $t, $e1, $c ) => ;; if the 
-                    (p($i+1, $t, $e1, $c)and (p($i+1, $t, $e1+1, vide))=> not tube_source($i+1,$t) )xor
-                    (p($i+1, $t, $e1, vide)and (p($i+1, $t, $e1+1, vide)) => tube_source($i+1,$t) and couleur_deplacee($i+1,$t) ) ;; after each step, if a filled  layer stays empty, then it can't be the destination, but if it is filled then it is the destination
+                    (p($i+1, $t, $e1, $c)and (p($i+1, $t, $e1+1, vide)or est_haut($i+1, $t, $e1))=> not tube_source($i+1,$t) )xor
+                    (p($i+1, $t, $e1, vide)and (p($i+1, $t, $e1+1, vide)or est_haut($i+1, $t, $e1)) => tube_source($i+1,$t) and couleur_deplacee($i+1,$c) ) ;; after each step, if a filled  layer stays empty, then it can't be the destination, but if it is filled then it is the destination
             end
         end
     end
 end
+
+;; is in top
+bigand $i in $ETAPES when $i != 0: ;; for each step
+    bigand $t in [1..$T]: ;; for each tube
+        est_haut($i, $t, 4)
+    end
+end
+
 
 
 ;; ;; ;; max layer
