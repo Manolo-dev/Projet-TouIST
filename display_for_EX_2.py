@@ -5,6 +5,7 @@ with open('output.txt') as f:
     datas = f.read()
 
 tubes = re.findall(r"1 p\((\d+),(\d+),(\d+),(\w+)\)", datas)
+actions = re.findall(r"1 verser\((\d+),(\d+),(\d+),(\d+),(\d+),(\w+)\)", datas)
 
 colors_b = {
     'vert':   '\033[48;2;087;255;087m',
@@ -53,6 +54,16 @@ for e in tubes:
 
 tubes = result_tubes
 
+#=================#
+#===| ACTIONS |===#
+#=================#
+
+# parse to int
+actions_temp = [(None,None,None,None,None)]*(len(actions)+1)
+for i in range(len(actions)):
+    actions_temp[int(actions[i][0])] = (int(actions[i][0]), int(actions[i][1])-1, int(actions[i][2])-1, int(actions[i][3])-1, int(actions[i][4])-1, actions[i][5])
+actions = actions_temp
+
 #==============#
 #===| SHOW |===#
 #==============#
@@ -81,6 +92,11 @@ for i in range(size_tubes[0]):
                 char = "   "
                 if _ == 0 and ((k+1 < size_tubes[2] and t[k+1] == 'vide') or (k+1 == size_tubes[2])) and e != 'vide':
                     char = colors_f['vide']+"▝▀▘" # ▜█▛    ▛ ▜    ▛▜▛    ▓▓▓
+                if _ == 1 and k == actions[i][2] and j == actions[i][1]:
+                    char = "╺━╸"
+                    char = colors_f[actions[i][5]]+char
+                if _ == 1 and k == actions[i][4] and j == actions[i][3]:
+                    char = colors_f['vide']+"╺╋╸"
                 if _ == 2 and k != 0 and e != "vide":
                     char = "▁▁▁"
                 print(colors_b[e] + char + '\033[0m' + ('\033[1;31m▏\033[1;0m ' if j < size_tubes[1] else '') + ('\033[1;31m▕\033[1;0m' if j < size_tubes[1]-1 else ''), end="")
