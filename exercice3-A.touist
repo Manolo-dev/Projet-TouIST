@@ -43,7 +43,6 @@ p(0, 3, 2, vide) ;; the third tube, second layer is empty
 p(0, 3, 3, vide) ;; the third tube, third layer is empty
 p(0, 3, 4, vide) ;; the third tube, fourth layer is empty
 
-
 ;; end init of the third tube
 ;; so it's look like this
 ;; tube 3
@@ -107,7 +106,6 @@ bigand $t in [1..$T]: ;; for each tube
 end
 
 ;;ex3 rules
-
 
 ;; ;; rule 1 (at least 1 of each)
 ;; bigand $i in $ETAPES when $i!=$k: ;; for each state
@@ -200,7 +198,6 @@ bigand $i in $ETAPES when $i != 0:
     end
 end
 
-
 ;;rule 5
 bigand $i in $ETAPES when $i != 0:
     bigand $t in [1..$T]:
@@ -279,8 +276,6 @@ end
 ;; ;;     end
 ;; ;; end
 
-
-
 ;; ;; ;; max layer
 ;; ;; bigand $e in $ETAPES: ;; for each step
 ;; ;;     bigand $t in [1..$T]: ;; for each tube
@@ -289,7 +284,6 @@ end
 ;; ;;         end
 ;; ;;     end
 ;; ;; end
-
 
 ;; ;; is in top
 ;; bigand $i in $ETAPES: ;; for each step
